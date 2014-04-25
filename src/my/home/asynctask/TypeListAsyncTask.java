@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -70,7 +71,9 @@ public class TypeListAsyncTask extends AsyncTask<String, String, String> {
 	
 	@Override
 	protected void onPostExecute(String result) {
-		this.adapter.addAll(result.split("\n"));
+		if (!TextUtils.isEmpty(result)) {
+			this.adapter.addAll(result.split("\n"));
+		}
 		progressBar.setVisibility(View.INVISIBLE);
 		super.onPostExecute(result);
 	}

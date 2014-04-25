@@ -5,11 +5,11 @@
     <shape>
         <solid android:color="#66FFFFFF" />
     </shape>
-</item>
+    </item>
     <item>
     <shape>
         <solid android:color="#FF666666" />
     </shape>
-</item>
+    </item>
 
 </selector>
