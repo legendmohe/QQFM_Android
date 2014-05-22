@@ -6,4 +6,6 @@
     <string name="action_refresh_list">Refresh</string>
     <string name="pref_user_profile">User</string>
     <string name="pref_server_address">Server Address</string>
+    
+    <string name="error_error_info">Server Error.</string>
 </resources>

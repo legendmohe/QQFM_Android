@@ -45,6 +45,7 @@ public final class R {
         public static final int action_refresh_list=0x7f060002;
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
+        public static final int error_error_info=0x7f060005;
         public static final int pref_server_address=0x7f060004;
         public static final int pref_user_profile=0x7f060003;
     }

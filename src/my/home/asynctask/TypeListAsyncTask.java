@@ -11,6 +11,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 
 import android.os.AsyncTask;
 import android.text.TextUtils;
@@ -23,6 +25,9 @@ public class TypeListAsyncTask extends AsyncTask<String, String, String> {
 
 	public static final String TAG = "TypeListAsyncTask";
 	public static final String LIST_CMD = "/list";
+	private int timeoutConnection = 3000;  
+	private int timeoutSocket = 5000; 
+	BasicHttpParams httpParameters;
 	
 	private ProgressBar progressBar;
 	
@@ -31,6 +36,7 @@ public class TypeListAsyncTask extends AsyncTask<String, String, String> {
 	public TypeListAsyncTask(ArrayAdapter<String> adapter, ProgressBar progressBar) {
 		this.adapter = adapter;
 		this.progressBar = progressBar;
+		this.setConnectionParams();
 	}
 	
 	@Override
@@ -40,10 +46,16 @@ public class TypeListAsyncTask extends AsyncTask<String, String, String> {
 		super.onPreExecute();
 	}
 	
+	private void setConnectionParams() {
+		httpParameters = new BasicHttpParams();// Set the timeout in milliseconds until a connection is established.  
+	    HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);// Set the default socket timeout (SO_TIMEOUT) // in milliseconds which is the timeout for waiting for data.  
+	    HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+	}
+	
 	@Override
 	protected String doInBackground(String... params) {
 		String urlString = SendCommandAsyncTask.SERVER_ADDRESS + LIST_CMD;
-        HttpClient httpclient = new DefaultHttpClient();
+        HttpClient httpclient = new DefaultHttpClient(httpParameters);
         HttpResponse response;
         String responseString = null;
         try {
@@ -60,10 +72,8 @@ public class TypeListAsyncTask extends AsyncTask<String, String, String> {
                 throw new IOException(statusLine.getReasonPhrase());
             }
         } catch (ClientProtocolException e) {
-            //TODO Handle problems..
         	System.out.println(e);
         } catch (IOException e) {
-            //TODO Handle problems..
         	System.out.println(e);
         }
         return responseString;
